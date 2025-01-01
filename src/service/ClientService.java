@@ -13,21 +13,17 @@ import java.util.List;
 
 public class ClientService implements IDAO<Client> {
 
-
     @Override
     public boolean creat(Client o) {
-        String req = "insert into client (nom, prenom, telephone, email) values(?,?,?,?)";
-        try {
-            PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
+        String req = "INSERT INTO client (nom, prenom, telephone, email) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
             ps.setString(1, o.getNom());
             ps.setString(2, o.getPrenom());
             ps.setString(3, o.getTelephone());
             ps.setString(4, o.getEmail());
-            if (ps.executeUpdate() == 1) {
-                return true;
-            }
+            return ps.executeUpdate() == 1;
         } catch (SQLException e) {
-            System.out.println("Erreur sql");
+            System.err.println("Erreur lors de la création du client : " + e.getMessage());
         }
         return false;
     }
@@ -35,18 +31,15 @@ public class ClientService implements IDAO<Client> {
     @Override
     public boolean update(Client o) {
         String req = "UPDATE client SET nom = ?, prenom = ?, email = ?, telephone = ? WHERE id = ?";
-        try {
-            PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
             ps.setString(1, o.getNom());
             ps.setString(2, o.getPrenom());
             ps.setString(3, o.getEmail());
             ps.setString(4, o.getTelephone());
             ps.setInt(5, o.getId());
-            if (ps.executeUpdate() == 1) {
-                return true;
-            }
+            return ps.executeUpdate() == 1;
         } catch (SQLException e) {
-            System.out.println("Erreur SQL : " + e.getMessage());
+            System.err.println("Erreur lors de la mise à jour du client avec ID " + o.getId() + " : " + e.getMessage());
         }
         return false;
     }
@@ -54,14 +47,11 @@ public class ClientService implements IDAO<Client> {
     @Override
     public boolean delete(Client o) {
         String req = "DELETE FROM client WHERE id = ?";
-        try {
-            PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
             ps.setInt(1, o.getId());
-            if (ps.executeUpdate() == 1) {
-                return true;
-            }
+            return ps.executeUpdate() == 1;
         } catch (SQLException e) {
-            System.out.println("Erreur SQL");
+            System.err.println("Erreur lors de la suppression du client avec ID " + o.getId() + " : " + e.getMessage());
         }
         return false;
     }
@@ -69,15 +59,20 @@ public class ClientService implements IDAO<Client> {
     @Override
     public Client findById(int id) {
         String req = "SELECT * FROM client WHERE id = ?";
-        try {
-            PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Client(rs.getString("nom"), rs.getString("prenom"), rs.getString("telephone"), rs.getString("email"));
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Client(
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("telephone"),
+                            rs.getString("email")
+                    );
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Erreur SQL");
+            System.err.println("Erreur lors de la recherche du client avec ID " + id + " : " + e.getMessage());
         }
         return null;
     }
@@ -86,18 +81,50 @@ public class ClientService implements IDAO<Client> {
     public List<Client> findAll() {
         List<Client> clients = new ArrayList<>();
         String req = "SELECT * FROM client";
-        try {
-            PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
-            ResultSet rs = ps.executeQuery();
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                clients.add(new Client(rs.getString("nom"), rs.getString("prenom"), rs.getString("telephone"), rs.getString("email")));
+                Client client = new Client(
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("telephone"),
+                        rs.getString("email")
+                );
+                clients.add(client);
             }
-            return clients;
         } catch (SQLException e) {
-            System.out.println("Erreur SQL");
+            System.err.println("Erreur lors de la récupération de tous les clients : " + e.getMessage());
         }
-        return null;
+        return clients;
     }
 
+    public boolean isEmailExist(String email) {
+        String req = "SELECT COUNT(*) FROM client WHERE email = ?";
+        try {
+            PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true; // L'email existe déjà
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL : " + e.getMessage());
+        }
+        return false; // L'email n'existe pas
+    }
+
+    public boolean isPhoneExist(String telephone) {
+        String req = "SELECT COUNT(*) FROM client WHERE telephone = ?";
+        try {
+            PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
+            ps.setString(1, telephone);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                return true; // Le téléphone existe déjà
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL : " + e.getMessage());
+        }
+        return false; // Le téléphone n'existe pas
+    }
 
 }

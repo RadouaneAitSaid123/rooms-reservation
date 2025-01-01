@@ -5,6 +5,7 @@
 package presentation;
 
 import entities.Client;
+import javax.swing.JInternalFrame;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import static javax.swing.JOptionPane.showConfirmDialog;
@@ -16,10 +17,10 @@ import service.ClientService;
  *
  * @author PC
  */
-public class ClientFrame extends javax.swing.JInternalFrame {
+public class ClientFrame extends JInternalFrame {
 
-    private  ClientService cs;
-    private  DefaultTableModel model;
+    private ClientService cs;
+    private DefaultTableModel model;
     private static int id;
 
     /**
@@ -264,7 +265,7 @@ public class ClientFrame extends javax.swing.JInternalFrame {
     private void ModifierClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifierClientActionPerformed
         int selectedRow = ClientTable.getSelectedRow();
         if (selectedRow == -1) {
-           showMessageDialog(this, "Veuillez sélectionner un client à modiffier !");
+            showMessageDialog(this, "Veuillez sélectionner un client à modiffier !");
             return;
         }
         String nom = nomTxt.getText();
@@ -299,8 +300,27 @@ public class ClientFrame extends javax.swing.JInternalFrame {
         String tel = telephoneTxt.getText();
         String mail = emailTxt.getText();
 
+        //vérification des champs vides
         if (nom.isEmpty() || prenom.isEmpty() || tel.isEmpty() || mail.isEmpty()) {
             showMessageDialog(this, "Veuillez remplir tous les champs.", "Erreur", ERROR_MESSAGE);
+            return;
+        }
+
+        // Vérification du format de l'email
+        if (!isEmailValid(mail)) {
+            showMessageDialog(this, "Veuillez entrer un email valide.", "Erreur", ERROR_MESSAGE);
+            return;
+        }
+
+        // Vérification de l'unicité de l'email
+        if (cs.isEmailExist(mail)) {
+            showMessageDialog(this, "Cet email est déjà utilisé.", "Erreur", ERROR_MESSAGE);
+            return;
+        }
+
+        // Vérification de l'unicité du téléphone
+        if (cs.isPhoneExist(tel)) {
+            showMessageDialog(this, "Ce numéro de téléphone est déjà utilisé.", "Erreur", ERROR_MESSAGE);
             return;
         }
 
@@ -315,15 +335,24 @@ public class ClientFrame extends javax.swing.JInternalFrame {
             emailTxt.setText("");
 
             loadTable();
+        } else {
+            showMessageDialog(this, "Une erreur est survenue lors de l'ajout.", "Erreur", ERROR_MESSAGE);
         }
     }//GEN-LAST:event_AddClientActionPerformed
 
+    private boolean isEmailValid(String email) {
+        return email != null && email.matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
+    }
+
     private void ClientTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ClientTableMouseClicked
-        id = Integer.parseInt(model.getValueAt(ClientTable.getSelectedRow(), 0).toString());
-        nomTxt.setText((String) model.getValueAt(ClientTable.getSelectedRow(), 1));
-        prenomTxt.setText((String) model.getValueAt(ClientTable.getSelectedRow(), 2));
-        telephoneTxt.setText((String) model.getValueAt(ClientTable.getSelectedRow(), 3));
-        emailTxt.setText((String) model.getValueAt(ClientTable.getSelectedRow(), 4));
+        int selectedRow = ClientTable.getSelectedRow();
+        if (selectedRow != -1) {
+            id = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
+            nomTxt.setText((String) model.getValueAt(selectedRow, 1));
+            prenomTxt.setText((String) model.getValueAt(selectedRow, 2));
+            telephoneTxt.setText((String) model.getValueAt(selectedRow, 3));
+            emailTxt.setText((String) model.getValueAt(selectedRow, 4));
+        }
 
     }//GEN-LAST:event_ClientTableMouseClicked
 

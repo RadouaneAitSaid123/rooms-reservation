@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Objects;
+
 public class Client {
 
     private int id;
@@ -10,13 +12,15 @@ public class Client {
     private static int count = 0;
 
     public Client(String nom, String prenom, String telephone, String email) {
+        if (!isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email format.");
+        }
         this.id = ++count;
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
         this.email = email;
     }
-
 
     public int getId() {
         return id;
@@ -51,21 +55,37 @@ public class Client {
     }
 
     public String getEmail() {
+
         return email;
     }
 
     public void setEmail(String email) {
+        if (!isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email format.");
+        }
         this.email = email;
+    }
+    
+     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return Objects.equals(email, client.email);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 
     @Override
     public String toString() {
-        return "entities.Client{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return String.format("Client{id=%d, nom='%s', prenom='%s', telephone='%s', email='%s'}",
+                id, nom, prenom, telephone, email);
+    }
+
+    private boolean isValidEmail(String email) {
+        return email != null && email.matches("^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$");
     }
 }
