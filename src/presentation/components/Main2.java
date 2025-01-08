@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/MDIApplication.java to edit this template
  */
-package presentation;
+package presentation.components;
 
 import javax.swing.JFrame;
 
@@ -12,12 +12,12 @@ import javax.swing.JFrame;
  *
  * @author PC
  */
-public class Main extends JFrame {
+public class Main2 extends JFrame {
 
     /**
      * Creates new form Main
      */
-    public Main() {
+    public Main2() {
         initComponents();
         // Centrer la fenêtre
         setLocationRelativeTo(null);
