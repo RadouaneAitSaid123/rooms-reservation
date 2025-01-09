@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/ClientFrame.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/Client.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Main1.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelCover.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Main2.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelLoginAndRegister.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/ClientService.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/Login.java</file>
         </group>
     </open-files>
 </project-private>

@@ -4,9 +4,12 @@
  */
 package presentation.components;
 
+import entities.ModelUser;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,16 +19,22 @@ import presentation.swing.MyPasswordField;
 import presentation.swing.MyTextField;
 
 public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
-    
-    public PanelLoginAndRegister() {
+
+    private ModelUser user;
+
+    public ModelUser getUser() {
+        return user;
+    }
+
+    public PanelLoginAndRegister(ActionListener eventRegister) {
         initComponents();
-        initRegister();
+        initRegister(eventRegister);
         initLogin();
         login.setVisible(false);
         register.setVisible(true);
     }
 
-     private void initRegister() {
+    private void initRegister(ActionListener eventRegister) {
         register.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
         JLabel label = new JLabel("Create Account");
         label.setFont(new Font("sansserif", 1, 30));
@@ -46,8 +55,18 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         Button cmd = new Button();
         cmd.setBackground(new Color(7, 164, 121));
         cmd.setForeground(new Color(250, 250, 250));
-        cmd.setText("SIGN UP");
+        cmd.addActionListener(eventRegister);
+        cmd.setText("S'inscrire");
         register.add(cmd, "w 40%, h 40");
+        cmd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String userName = txtUser.getText().trim();
+                String email = txtEmail.getText().trim();
+                String password = String.valueOf(txtPass.getPassword());
+                user = new ModelUser(0, userName, email, password);
+            }
+        });
     }
 
     private void initLogin() {
@@ -73,11 +92,11 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         Button cmd = new Button();
         cmd.setBackground(new Color(7, 164, 121));
         cmd.setForeground(new Color(250, 250, 250));
-        cmd.setText("SIGN IN");
+        cmd.setText("Se connecter");
         login.add(cmd, "w 40%, h 40");
     }
-    
-      public void showRegister(boolean show) {
+
+    public void showRegister(boolean show) {
         if (show) {
             register.setVisible(true);
             login.setVisible(false);
@@ -86,6 +105,7 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
             login.setVisible(true);
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -126,7 +146,6 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         add(register, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel login;
