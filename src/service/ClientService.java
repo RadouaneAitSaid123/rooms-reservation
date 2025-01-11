@@ -1,6 +1,5 @@
 package service;
 
-import com.mysql.cj.xdevapi.Result;
 import connexion.Connexion;
 import dao.IDAO;
 import entities.Client;

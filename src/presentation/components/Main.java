@@ -4,6 +4,7 @@
  */
 package presentation.components;
 
+import entities.ModelUser;
 import javax.swing.JFrame;
 
 
@@ -13,14 +14,22 @@ import javax.swing.JFrame;
  * @author PC
  */
 public class Main extends JFrame {
+    
+    private final ModelUser user;
 
-    /**
-     * Creates new form Main
-     */
-    public Main() {
+    
+    public Main(ModelUser user) {
+        this.user = user;
         initComponents();
-        // Centrer la fenêtre
-        setLocationRelativeTo(null);
+        lbUser.setText(user.getUserName());
+            
+    }
+    public static void main(ModelUser user) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public  void run(){
+               new Main(user).setVisible(true);
+            }
+        });
            
     }
 
@@ -29,6 +38,7 @@ public class Main extends JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        lbUser = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -45,6 +55,10 @@ public class Main extends JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        lbUser.setText("jLabel1");
+        desktopPane.add(lbUser);
+        lbUser.setBounds(340, 0, 80, 30);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Gestion");
@@ -127,7 +141,7 @@ public class Main extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,6 +185,7 @@ public class Main extends JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel lbUser;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;

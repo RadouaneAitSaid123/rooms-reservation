@@ -4,6 +4,7 @@
  */
 package presentation.components;
 
+import entities.ModelLogin;
 import entities.ModelUser;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -21,15 +22,20 @@ import presentation.swing.MyTextField;
 public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
 
     private ModelUser user;
+    private ModelLogin dataLogin;
 
     public ModelUser getUser() {
         return user;
     }
 
-    public PanelLoginAndRegister(ActionListener eventRegister) {
+    public ModelLogin getDataLogin() {
+        return dataLogin;
+    }
+
+    public PanelLoginAndRegister(ActionListener eventRegister, ActionListener eventLogin) {
         initComponents();
         initRegister(eventRegister);
-        initLogin();
+        initLogin(eventLogin);
         login.setVisible(false);
         register.setVisible(true);
     }
@@ -69,7 +75,7 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         });
     }
 
-    private void initLogin() {
+    private void initLogin(ActionListener eventLogin) {
         login.setLayout(new MigLayout("wrap", "push[center]push", "push[]25[]10[]10[]25[]push"));
         JLabel label = new JLabel("Sign In");
         label.setFont(new Font("sansserif", 1, 30));
@@ -92,8 +98,17 @@ public class PanelLoginAndRegister extends javax.swing.JLayeredPane {
         Button cmd = new Button();
         cmd.setBackground(new Color(7, 164, 121));
         cmd.setForeground(new Color(250, 250, 250));
+         cmd.addActionListener(eventLogin);
         cmd.setText("Se connecter");
         login.add(cmd, "w 40%, h 40");
+        cmd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String email = txtEmail.getText().trim();
+                String password = String.valueOf(txtPass.getPassword());
+                dataLogin = new ModelLogin(email, password);
+            }
+        });
     }
 
     public void showRegister(boolean show) {

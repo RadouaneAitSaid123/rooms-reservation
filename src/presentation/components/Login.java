@@ -1,18 +1,23 @@
 package presentation.components;
 
+import java.sql.Connection;
+import connexion.Connexion;
+import entities.ModelLogin;
+import entities.ModelMessage;
 import entities.ModelUser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import javax.swing.JLayer;
 import javax.swing.JLayeredPane;
-import javax.swing.SwingUtilities;
 import net.miginfocom.swing.MigLayout;
 import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTarget;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
+import service.MailService;
+import service.UserService;
+import java.sql.SQLException;
 
 public class Login extends javax.swing.JFrame {
 
@@ -26,6 +31,7 @@ public class Login extends javax.swing.JFrame {
     private final double coverSize = 40;
     private final double loginSize = 60;
     private final DecimalFormat df = new DecimalFormat("##0.###", DecimalFormatSymbols.getInstance(Locale.US));
+    private UserService service;
 
     public Login() {
         initComponents();
@@ -33,6 +39,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     private void init() {
+        service = new UserService();
         layout = new MigLayout("fill, insets 0");
         cover = new PanelCover();
         loading = new PanelLoading();
@@ -43,7 +50,15 @@ public class Login extends javax.swing.JFrame {
                 register();
             }
         };
-        loginAndRegister = new PanelLoginAndRegister(eventRegister);
+
+        ActionListener eventLogin = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                login();
+            }
+        };
+
+        loginAndRegister = new PanelLoginAndRegister(eventRegister, eventLogin);
         TimingTarget target = new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
@@ -109,14 +124,73 @@ public class Login extends javax.swing.JFrame {
             }
 
         });
+        verifyCode.addEventButtonOK(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    ModelUser user = loginAndRegister.getUser();
+                    if (service.verifyCodeWithUser(user.getUserID(), verifyCode.getInputCode())) {
+                        service.doneVerify(user.getUserID());
+                        showMessage(Message.MessageType.SUCCESS, "Register sucess");
+                        verifyCode.setVisible(false);
+                    } else {
+                        showMessage(Message.MessageType.ERROR, "Verify code incorrect");
+                    }
+                } catch (SQLException e) {
+                    showMessage(Message.MessageType.ERROR, "Error");
+                }
+            }
+        });
 
     }
 
     private void register() {
         ModelUser user = loginAndRegister.getUser();
-        // loading.setVisible(true);
-        showMessage(Message.MessageType.ERROR, "Test Message");
+        try {
+            if (service.checkDuplicateUser(user.getUserName())) {
+                showMessage(Message.MessageType.ERROR, "User name already exit");
+            } else if (service.checkDuplicateEmail(user.getEmail())) {
+                showMessage(Message.MessageType.ERROR, "Email already exit");
+            } else {
+                service.insertUser(user);
+                sendMail(user);
+            }
+        } catch (SQLException e) {
+            showMessage(Message.MessageType.ERROR, "Error Register");
+        }
+    }
 
+    private void login() {
+        ModelLogin data = loginAndRegister.getDataLogin();
+        try {
+            ModelUser user = service.login(data);
+            if (user != null) {
+                this.dispose();
+                Main.main(user);
+            } else {
+                showMessage(Message.MessageType.ERROR, "Email or Password incorrect");
+            }
+        } catch (SQLException e) {
+            showMessage(Message.MessageType.ERROR, "Error login");
+
+        }
+    }
+
+    private void sendMail(ModelUser user) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loading.setVisible(true);
+                ModelMessage ms = new MailService().sendMail(user.getEmail(), user.getVerifyCode());
+                if (ms.isSuccess()) {
+                    loading.setVisible(false);
+                    verifyCode.setVisible(true);
+                } else {
+                    loading.setVisible(false);
+                    showMessage(Message.MessageType.ERROR, ms.getMessage());
+                }
+            }
+        }).start();
     }
 
     private void showMessage(Message.MessageType messageType, String message) {
@@ -215,7 +289,33 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
+        // Configuration du Look and Feel Nimbus
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        // Connexion à la base de données
+        try {
+            // Récupération de la connexion depuis la classe Connexion
+            Connection connection = Connexion.getConnection();
+            if (connection != null) {
+                System.out.println("Connexion à la base de données établie avec succès.");
+            } else {
+                System.out.println("Échec de la connexion à la base de données.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Lancer l'interface graphique
+        java.awt.EventQueue.invokeLater(() -> {
             new Login().setVisible(true);
         });
     }
