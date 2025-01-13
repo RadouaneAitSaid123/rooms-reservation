@@ -6,14 +6,18 @@
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/ModelUser.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/connexion/Connexion.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Login.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelCover.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/ClientFrame.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelVerifyCode.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelLoading.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/MailService.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelCover.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelLoginAndRegister.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Message.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/ModelLogin.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Main.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/ModelMessage.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/ClientService.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/UserService.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/swing/PanelRound.java</file>
         </group>
     </open-files>

@@ -12,6 +12,10 @@ public class Categorie {
         this.code = code;
         this.libelle = libelle;
     }
+    
+    public Categorie() {
+       
+    }
     public Categorie(int id,String code, String libelle) {
         this.id = id;
         this.code = code;

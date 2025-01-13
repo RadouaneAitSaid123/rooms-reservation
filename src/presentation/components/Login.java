@@ -166,7 +166,7 @@ public class Login extends javax.swing.JFrame {
             ModelUser user = service.login(data);
             if (user != null) {
                 this.dispose();
-                Main.main(user);
+                Reservations.main(user);
             } else {
                 showMessage(Message.MessageType.ERROR, "Email or Password incorrect");
             }

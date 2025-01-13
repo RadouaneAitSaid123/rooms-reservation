@@ -4,16 +4,35 @@ import java.util.Date;
 
 public class Reservation {
 
+    private int id;
     private Date dateDebut;
     private Date dateFin;
     private Client client;
     private Chambre chambre;
+    private static int count = 0;
 
     public Reservation(Date dateDebut, Date dateFin, Client client, Chambre chambre) {
+        this.id = ++count;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
         this.chambre = chambre;
+    }
+    
+     public Reservation(int id, Date dateDebut, Date dateFin, Client client, Chambre chambre) {
+        this.id = id;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.client = client;
+        this.chambre = chambre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Date getDateDebut() {
@@ -50,11 +69,11 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation{" +
-                "dateDebut=" + dateDebut +
-                ", dateFin=" + dateFin +
-                ", client=" + client +
-                ", chambre=" + chambre +
-                '}';
+        return "Reservation{"
+                + "dateDebut=" + dateDebut
+                + ", dateFin=" + dateFin
+                + ", client=" + client
+                + ", chambre=" + chambre
+                + '}';
     }
 }

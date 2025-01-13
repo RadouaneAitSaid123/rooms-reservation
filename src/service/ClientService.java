@@ -45,6 +45,9 @@ public class ClientService implements IDAO<Client> {
 
     @Override
     public boolean delete(Client o) {
+        if (o == null) {
+            throw new IllegalArgumentException("Le client est nul !");
+        }
         String req = "DELETE FROM client WHERE id = ?";
         try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
             ps.setInt(1, o.getId());
@@ -60,16 +63,16 @@ public class ClientService implements IDAO<Client> {
         String req = "SELECT * FROM client WHERE id = ?";
         try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
             ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return new Client(
-                            rs.getString("nom"),
-                            rs.getString("prenom"),
-                            rs.getString("telephone"),
-                            rs.getString("email")
-                    );
-                }
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String phone = rs.getString("telephone");
+                String email = rs.getString("email");
+                return new Client(id, nom, prenom, phone, email);
             }
+
         } catch (SQLException e) {
             System.err.println("Erreur lors de la recherche du client avec ID " + id + " : " + e.getMessage());
         }
@@ -83,6 +86,7 @@ public class ClientService implements IDAO<Client> {
         try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Client client = new Client(
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("telephone"),
@@ -96,11 +100,12 @@ public class ClientService implements IDAO<Client> {
         return clients;
     }
 
-    public boolean isEmailExist(String email) {
-        String req = "SELECT COUNT(*) FROM client WHERE email = ?";
+    public boolean isEmailExist(String email, int excludeId) {
+        String req = "SELECT COUNT(*) FROM client WHERE email = ? AND id != ?";
         try {
             PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
             ps.setString(1, email);
+            ps.setInt(2, excludeId);
             ResultSet rs = ps.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
                 return true; // L'email existe déjà
@@ -111,11 +116,12 @@ public class ClientService implements IDAO<Client> {
         return false; // L'email n'existe pas
     }
 
-    public boolean isPhoneExist(String telephone) {
-        String req = "SELECT COUNT(*) FROM client WHERE telephone = ?";
+    public boolean isPhoneExist(String telephone, int excludeId) {
+        String req = "SELECT COUNT(*) FROM client WHERE telephone = ? AND id != ?";
         try {
             PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
             ps.setString(1, telephone);
+            ps.setInt(2, excludeId);
             ResultSet rs = ps.executeQuery();
             if (rs.next() && rs.getInt(1) > 0) {
                 return true; // Le téléphone existe déjà

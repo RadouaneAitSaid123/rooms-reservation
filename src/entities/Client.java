@@ -21,6 +21,17 @@ public class Client {
         this.telephone = telephone;
         this.email = email;
     }
+    
+     public Client(int id, String nom, String prenom, String telephone, String email) {
+        if (!isValidEmail(email)) {
+            throw new IllegalArgumentException("Invalid email format.");
+        }
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.telephone = telephone;
+        this.email = email;
+    }
 
     public int getId() {
         return id;
