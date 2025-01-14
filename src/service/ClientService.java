@@ -132,4 +132,44 @@ public class ClientService implements IDAO<Client> {
         return false; // Le téléphone n'existe pas
     }
 
+    public Client findByName(String clientName) {
+        String req = "SELECT * FROM client WHERE nom = ?";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
+            ps.setString(1, clientName);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String prenom = rs.getString("prenom");
+                String telephone = rs.getString("telephone");
+                String email = rs.getString("email");
+
+                return new Client(id, clientName, prenom, telephone, email);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL : " + e.getMessage());
+        }
+        return null;
+    }
+
+    public Client findByPrenom(String clientPrenom) {
+         String req = "SELECT * FROM client WHERE prenom = ?";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
+            ps.setString(1, clientPrenom);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String nom = rs.getString("nom");
+                String telephone = rs.getString("telephone");
+                String email = rs.getString("email");
+
+                return new Client(id, nom, clientPrenom, telephone, email);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL : " + e.getMessage());
+        }
+        return null;
+    }
+
 }

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ChambreService implements IDAO<Chambre> {
@@ -156,4 +157,89 @@ public class ChambreService implements IDAO<Chambre> {
         return false; // Le telephone n'existe pas
     }
 
+    public List<Chambre> findAvailableRoomsByDatesAndCategory(int categorieId, Date dateDebut, Date dateFin) {
+        String query = "SELECT c.id, c.numero, c.telephone, c.categorie_id "
+                + "FROM chambre c "
+                + "WHERE c.categorie_id = ? "
+                + "AND c.id NOT IN ("
+                + "   SELECT r.chambre_id "
+                + "   FROM reservation r "
+                + "   WHERE (r.dateDebut <= ? AND r.dateFin >= ?)"
+                + ")";
+
+        List<Chambre> chambresDispo = new ArrayList<>();
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(query)) {
+
+            ps.setInt(1, categorieId);
+            ps.setDate(2, new java.sql.Date(dateFin.getTime()));
+            ps.setDate(3, new java.sql.Date(dateDebut.getTime()));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+
+                    int id = rs.getInt("id");
+                    String numero = rs.getString("numero");
+                    String telephone = rs.getString("telephone");
+                    int categorie_id = rs.getInt("categorie_id");
+
+                    Categorie categorie = new CategorieService().findById(categorie_id);
+
+                    chambresDispo.add(new Chambre(id, numero, telephone, categorie));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL lors de la récupération des chambres disponibles : " + e.getMessage());
+        }
+        return chambresDispo;
+    }
+
+    public Chambre findByNumero(String chambreNum) {
+        String req = "SELECT * FROM chambre WHERE numero = ?";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
+            ps.setString(1, chambreNum);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String telephone = rs.getString("telephone");
+
+                int categorieId = rs.getInt("categorie_id");
+                Categorie categorie = new CategorieService().findById(categorieId);
+
+                // Créer et retourner l'objet Chambre
+                return new Chambre(id, chambreNum, telephone, categorie);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL : " + e.getMessage());
+        }
+        return null;
+    }
+    public List<Chambre> findAvailableRooms(int categorieId) {
+    String query = "SELECT c.id, c.numero, c.telephone, c.categorie_id " +
+                   "FROM chambre c " +
+                   "LEFT JOIN reservation r ON c.id = r.chambre_id " +
+                   "WHERE c.categorie_id = ? AND (r.id IS NULL OR r.dateFin < CURRENT_DATE)";
+    List<Chambre> chambreFiltered = new ArrayList<>();
+    try (PreparedStatement ps = Connexion.getConnection().prepareStatement(query)) {
+        ps.setInt(1, categorieId);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String numero = rs.getString("numero");
+                String telephone = rs.getString("telephone");
+                int categorie_id = rs.getInt("categorie_id");
+
+                // Récupération de la catégorie associée
+                Categorie categorie = new CategorieService().findById(categorie_id);
+
+                // Création de l'objet Chambre
+                chambreFiltered.add(new Chambre(id, numero, telephone, categorie));
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Erreur SQL lors de la récupération des chambres disponibles : " + e.getMessage());
+    }
+    return chambreFiltered;
+}
+    
 }

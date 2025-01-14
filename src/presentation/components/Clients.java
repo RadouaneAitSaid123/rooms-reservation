@@ -1,7 +1,5 @@
 package presentation.components;
 
-import entities.Categorie;
-import entities.Chambre;
 import entities.Client;
 import entities.ModelUser;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
