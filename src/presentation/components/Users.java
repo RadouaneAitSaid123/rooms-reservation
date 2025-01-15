@@ -1,13 +1,12 @@
-
 package presentation.components;
 
-
 import entities.ModelUser;
+import java.sql.SQLException;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
+import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.table.DefaultTableModel;
 import service.UserService;
-
 
 public class Users extends javax.swing.JFrame {
 
@@ -65,7 +64,6 @@ public class Users extends javax.swing.JFrame {
         UsersTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        addUserBtn = new javax.swing.JButton();
         editeUser = new javax.swing.JButton();
         deleteUserBtn = new javax.swing.JButton();
         UserEmail = new javax.swing.JTextField();
@@ -256,15 +254,6 @@ public class Users extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Gestion Utilisateurs");
 
-        addUserBtn.setBackground(new java.awt.Color(0, 204, 0));
-        addUserBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        addUserBtn.setText("Ajouter");
-        addUserBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addUserBtnActionPerformed(evt);
-            }
-        });
-
         editeUser.setBackground(new java.awt.Color(102, 153, 255));
         editeUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         editeUser.setText("Modifier");
@@ -284,6 +273,7 @@ public class Users extends javax.swing.JFrame {
         });
 
         UserEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        UserEmail.setEnabled(false);
         UserEmail.setPreferredSize(new java.awt.Dimension(64, 22));
         UserEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -305,6 +295,7 @@ public class Users extends javax.swing.JFrame {
         jLabel12.setPreferredSize(new java.awt.Dimension(37, 22));
 
         UserVerifyCode.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        UserVerifyCode.setEnabled(false);
         UserVerifyCode.setPreferredSize(new java.awt.Dimension(64, 22));
 
         annulerBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -344,14 +335,12 @@ public class Users extends javax.swing.JFrame {
                                         .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(UserVerifyCode, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(addUserBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(deleteUserBtn, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addComponent(deleteUserBtn)
                                         .addGap(38, 38, 38)
-                                        .addComponent(annulerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(editeUser))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(127, 127, 127)
-                                        .addComponent(editeUser)))
+                                        .addGap(69, 69, 69)
+                                        .addComponent(annulerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(18, 18, 18)
                                 .addComponent(jScrollPane1)
                                 .addGap(27, 27, 27))
@@ -396,13 +385,11 @@ public class Users extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(UserVerifyCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(editeUser)
-                            .addComponent(addUserBtn, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(deleteUserBtn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(deleteUserBtn)
-                            .addComponent(annulerBtn)))
+                        .addComponent(annulerBtn))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -448,117 +435,103 @@ public class Users extends javax.swing.JFrame {
             UserEmail.setText(email);
             UserPassword.setText(password);
             UserVerifyCode.setText(verifyCode);
- 
 
         }
     }//GEN-LAST:event_UsersTableMouseClicked
 
-    private void addUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserBtnActionPerformed
-        /*String nom = UserName.getText().trim();
-        String prenom = UserEmail.getText().trim();
-        String phone = UserPassword.getText().trim();
-        String email = UserVerifyCode.getText().trim();
-        if (nom.isEmpty() || prenom.isEmpty() || phone.isEmpty() || email.isEmpty()) {
-
-            showMessageDialog(this, "Veuillez remplir tous les champs.", "Erreur", ERROR_MESSAGE);
-
-        } else if (clientService.isPhoneExist(phone, 0)) {
-
-            showMessageDialog(this, "Ce numero existe deja.", "Erreur", ERROR_MESSAGE);
-        } else if (clientService.isEmailExist(email, 0)) {
-
-            showMessageDialog(this, "Cet email existe deja.", "Erreur", ERROR_MESSAGE);
-        } else {
-            Client client = new Client(nom, prenom, phone, email);
-
-            if (clientService.creat(client)) {
-                showMessageDialog(this, "Client ajouté avec succès.", "Succès", INFORMATION_MESSAGE);
-                cleanForm();
-                loadTable();
-            } else {
-                showMessageDialog(this, "Une erreur est survenue lors de l'ajout.", "Erreur", ERROR_MESSAGE);
-            }
-        }*/
-    }//GEN-LAST:event_addUserBtnActionPerformed
-
     private void editeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editeUserActionPerformed
         int selectedRow = UsersTable.getSelectedRow();
         if (selectedRow == -1) {
-            showMessageDialog(this, "Veuillez sélectionner un client à modifier !");
+            showMessageDialog(this, "Veuillez sélectionner un user à modifier !");
             return;
         }
-        String nom = UserName.getText().trim();
-        String prenom = UserEmail.getText().trim();
-        String phone = UserPassword.getText().trim();
-        String email = UserVerifyCode.getText().trim();
+        String nameUser = UserName.getText().trim();
+        String password = UserPassword.getText().trim();
+        String email = UserEmail.getText().trim();
+        String verifyCode = UserVerifyCode.getText().trim();
+        
 
-        if (nom.isEmpty() || prenom.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+        if (nameUser.isEmpty() || password.isEmpty()) {
 
             showMessageDialog(this, "Veuillez remplir tous les champs.", "Erreur", ERROR_MESSAGE);
 
-            /* } else if (clientService.isPhoneExist(phone, (int) ClientsTable.getValueAt(selectedRow, 0))) {
-
-            showMessageDialog(this, "Ce numero existe deja.", "Erreur", ERROR_MESSAGE);
-        } else if (clientService.isEmailExist(email, (int) ClientsTable.getValueAt(selectedRow, 0))) {
-
-            showMessageDialog(this, "Cet email existe deja.", "Erreur", ERROR_MESSAGE);
         } else {
+            try {
+                if (userService.checkDuplicateUser(nameUser)) {
 
-            int id = (int) ClientsTable.getValueAt(selectedRow, 0);
-            Client client = clientService.findById(id);
-            client.setNom(nom);
-            client.setPrenom(prenom);
-            client.setTelephone(phone);
-            client.setEmail(email);
-            int rep = showConfirmDialog(this, "Voulez vous vraiment modifier ce client ?");
-            if (rep == 0) {
-                if (clientService.update(client)) {
-                    showMessageDialog(this, "Client bien modifiée");
-                    loadTable();
-                    cleanForm();
-                }*/
+                    showMessageDialog(this, "Ce user existe deja.", "Erreur", ERROR_MESSAGE);
+                }
+            } catch (SQLException e) {
+
+            }
         }
-    
+
+        int id = (int) UsersTable.getValueAt(selectedRow, 0);
+        ModelUser utilisateur = userService.findById(id);
+
+        utilisateur.setUserName(nameUser);
+        utilisateur.setEmail(email);
+        utilisateur.setPassword(password);
+        utilisateur.setVerifyCode(verifyCode);
+
+        int rep = showConfirmDialog(this, "Voulez vous vraiment modifier ce user ?");
+        if (rep
+                == 0) {
+            if (userService.update(user)) {
+                showMessageDialog(this, "User bien modifiée");
+                loadTable();
+                cleanForm();
+            }
+        }
+
     }//GEN-LAST:event_editeUserActionPerformed
 
     private void deleteUserBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserBtnActionPerformed
-        /*int selectedRow = ClientsTable.getSelectedRow();
+        int selectedRow = UsersTable.getSelectedRow();
         if (selectedRow == -1) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Veuillez sélectionner un client à supprimer !");
+            javax.swing.JOptionPane.showMessageDialog(this, "Veuillez sélectionner un user à supprimer !");
             return;
         }
 
-        int id = (int) ClientsTable.getValueAt(selectedRow, 0);
-        int reponse = showConfirmDialog(this, "Voulez-vous vraiment supprimer ce client ?");
+        int id = (int) UsersTable.getValueAt(selectedRow, 0);
+        int reponse = showConfirmDialog(this, "Voulez-vous vraiment supprimer ce user ?");
         if (reponse == 0) {
 
-            if (clientService.delete(clientService.findById(id))) {
-                showMessageDialog(this, "Client bien supprimé");
+            if (userService.delete(userService.findById(id))) {
+                showMessageDialog(this, "User bien supprimé");
                 cleanForm();
                 loadTable();
             } else {
 
-                showMessageDialog(this, "Erreur lors de la suppression du client !");
+                showMessageDialog(this, "Erreur lors de la suppression de user !");
             }
 
-        }*/
+        }
     }//GEN-LAST:event_deleteUserBtnActionPerformed
 
+    private void cleanForm() {
+        UserId.setText("");
+        UserName.setText("");
+        UserEmail.setText("");
+        UserPassword.setText("");
+        UserVerifyCode.setText("");
+
+    }
+
     private void annulerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerBtnActionPerformed
-        //cleanForm();
+        cleanForm();
     }//GEN-LAST:event_annulerBtnActionPerformed
 
     private void UserEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UserEmailActionPerformed
 
-   
     public static void main(ModelUser user) {
 
-    java.awt.EventQueue.invokeLater(() -> {
-        new Users(user).setVisible(true);
-    });
-}
+        java.awt.EventQueue.invokeLater(() -> {
+            new Users(user).setVisible(true);
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField UserEmail;
@@ -567,7 +540,6 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JTextField UserPassword;
     private javax.swing.JTextField UserVerifyCode;
     private javax.swing.JTable UsersTable;
-    private javax.swing.JButton addUserBtn;
     private javax.swing.JButton annulerBtn;
     private javax.swing.JButton deleteUserBtn;
     private javax.swing.JButton editeUser;
@@ -593,4 +565,3 @@ public class Users extends javax.swing.JFrame {
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }
-

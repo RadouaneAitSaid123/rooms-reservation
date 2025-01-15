@@ -1,12 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package service;
 
 import java.sql.Connection;
 import connexion.Connexion;
-import entities.Client;
 import entities.ModelLogin;
 import entities.ModelUser;
 import java.sql.PreparedStatement;
@@ -161,6 +156,42 @@ public class UserService {
             System.err.println("Erreur lors de la récupération de tous les clients : " + e.getMessage());
         }
         return users;
+    }
+
+    public ModelUser findById(int id) {
+        String req = "SELECT * FROM user WHERE UserID = ?";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String userName = rs.getString("UserName");
+                String email = rs.getString("Email");
+                String password = rs.getString("Password");
+                String verifyCode = rs.getString("VerifyCode");
+                String status = rs.getString("Status");
+                return new ModelUser(id, userName, email, password, verifyCode, status);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la recherche de user avec ID " + id + " : " + e.getMessage());
+        }
+        return null;
+    }
+
+    public boolean delete(ModelUser modelUser) {
+        if (modelUser == null) {
+            throw new IllegalArgumentException("Le user est nul !");
+        }
+        String req = "DELETE FROM user WHERE UserID = ?";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
+            ps.setInt(1, modelUser.getUserID());
+            return ps.executeUpdate() == 1;
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la suppression de user avec ID " + modelUser.getUserID() + " : " + e.getMessage());
+        }
+        return false;
+
     }
 
 }

@@ -177,18 +177,15 @@ public class Login extends javax.swing.JFrame {
     }
 
     private void sendMail(ModelUser user) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                loading.setVisible(true);
-                ModelMessage ms = new MailService().sendMail(user.getEmail(), user.getVerifyCode());
-                if (ms.isSuccess()) {
-                    loading.setVisible(false);
-                    verifyCode.setVisible(true);
-                } else {
-                    loading.setVisible(false);
-                    showMessage(Message.MessageType.ERROR, ms.getMessage());
-                }
+        new Thread(() -> {
+            loading.setVisible(true);
+            ModelMessage ms = new MailService().sendMail(user.getEmail(), user.getVerifyCode());
+            if (ms.isSuccess()) {
+                loading.setVisible(false);
+                verifyCode.setVisible(true);
+            } else {
+                loading.setVisible(false);
+                showMessage(Message.MessageType.ERROR, ms.getMessage());
             }
         }).start();
     }
