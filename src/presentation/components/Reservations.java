@@ -6,6 +6,7 @@ import entities.Client;
 import entities.ModelUser;
 import entities.Reservation;
 import entities.ReservationStatus;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import service.CategorieService;
 import service.ChambreService;
 import service.ClientService;
+import service.PDFGenerator;
 import service.ReservationService;
 
 public class Reservations extends javax.swing.JFrame {
@@ -85,7 +88,7 @@ public class Reservations extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         filterDateFin = new com.toedter.calendar.JDateChooser();
         filterBtn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        exportBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -341,9 +344,14 @@ public class Reservations extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(51, 204, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton2.setText("Exporter");
+        exportBtn.setBackground(new java.awt.Color(51, 204, 255));
+        exportBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        exportBtn.setText("Exporter");
+        exportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -386,7 +394,7 @@ public class Reservations extends javax.swing.JFrame {
                                 .addComponent(RoomCategorie, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(roomComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2))
+                            .addComponent(exportBtn))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -422,7 +430,7 @@ public class Reservations extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton2))
+                    .addComponent(exportBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(annulerReservationBtn)
@@ -853,6 +861,36 @@ public class Reservations extends javax.swing.JFrame {
         loadTable(filteredReservations);
     }//GEN-LAST:event_filterBtnActionPerformed
 
+    private void exportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportBtnActionPerformed
+        try {
+            // Définir le chemin du fichier PDF
+            String directoryPath = "C:\\Emsi\\S1\\Java"; // Chemin spécifique
+            File directory = new File(directoryPath);
+
+            // Vérifier si le répertoire existe, sinon le créer
+            if (!directory.exists()) {
+                if (directory.mkdirs()) {
+                    System.out.println("Répertoire créé : " + directoryPath);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Impossible de créer le répertoire : " + directoryPath);
+                    return;
+                }
+            }
+
+            // Chemin complet du fichier PDF
+            String filePath = directoryPath + File.separator + "reservations.pdf";
+
+            // Générer le PDF
+            PDFGenerator pdfGenerator = new PDFGenerator();
+            pdfGenerator.generateReservationsPDF(filePath);
+
+            JOptionPane.showMessageDialog(this, "Fichier PDF généré avec succès : " + filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erreur lors de la génération du fichier PDF : " + e.getMessage());
+        }
+    }//GEN-LAST:event_exportBtnActionPerformed
+
     private void loadTable(List<Reservation> reservations) {
         DefaultTableModel model = (DefaultTableModel) ReservationsTable.getModel();
         model.setRowCount(0); // Effacer les lignes existantes
@@ -895,10 +933,10 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JButton annulerReservationBtn;
     private javax.swing.JComboBox<String> clientComoBox;
     private javax.swing.JButton deleteBtn;
+    private javax.swing.JButton exportBtn;
     private javax.swing.JButton filterBtn;
     private com.toedter.calendar.JDateChooser filterDateDebut;
     private com.toedter.calendar.JDateChooser filterDateFin;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

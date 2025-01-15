@@ -1,17 +1,27 @@
 package service;
 
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import connexion.Connexion;
 import dao.IDAO;
 import entities.Chambre;
 import entities.Client;
 import entities.Reservation;
 import entities.ReservationStatus;
+import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.io.FileOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReservationService implements IDAO<Reservation> {
 
@@ -210,5 +220,7 @@ public class ReservationService implements IDAO<Reservation> {
         }
         return reservations;
     }
+    
+     
 
 }

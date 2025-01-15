@@ -3,7 +3,6 @@ package presentation.components;
 import entities.Categorie;
 import entities.Chambre;
 import entities.ModelUser;
-import java.util.ArrayList;
 import java.util.List;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;

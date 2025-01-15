@@ -214,32 +214,54 @@ public class ChambreService implements IDAO<Chambre> {
         }
         return null;
     }
+
     public List<Chambre> findAvailableRooms(int categorieId) {
-    String query = "SELECT c.id, c.numero, c.telephone, c.categorie_id " +
-                   "FROM chambre c " +
-                   "LEFT JOIN reservation r ON c.id = r.chambre_id " +
-                   "WHERE c.categorie_id = ? AND (r.id IS NULL OR r.dateFin < CURRENT_DATE)";
-    List<Chambre> chambreFiltered = new ArrayList<>();
-    try (PreparedStatement ps = Connexion.getConnection().prepareStatement(query)) {
-        ps.setInt(1, categorieId);
-        try (ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String numero = rs.getString("numero");
-                String telephone = rs.getString("telephone");
-                int categorie_id = rs.getInt("categorie_id");
+        String query = "SELECT c.id, c.numero, c.telephone, c.categorie_id "
+                + "FROM chambre c "
+                + "LEFT JOIN reservation r ON c.id = r.chambre_id "
+                + "WHERE c.categorie_id = ? AND (r.id IS NULL OR r.dateFin < CURRENT_DATE)";
+        List<Chambre> chambreFiltered = new ArrayList<>();
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(query)) {
+            ps.setInt(1, categorieId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String numero = rs.getString("numero");
+                    String telephone = rs.getString("telephone");
+                    int categorie_id = rs.getInt("categorie_id");
 
-                // Récupération de la catégorie associée
-                Categorie categorie = new CategorieService().findById(categorie_id);
+                    // Récupération de la catégorie associée
+                    Categorie categorie = new CategorieService().findById(categorie_id);
 
-                // Création de l'objet Chambre
-                chambreFiltered.add(new Chambre(id, numero, telephone, categorie));
+                    // Création de l'objet Chambre
+                    chambreFiltered.add(new Chambre(id, numero, telephone, categorie));
+                }
             }
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL lors de la récupération des chambres disponibles : " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Erreur SQL lors de la récupération des chambres disponibles : " + e.getMessage());
+        return chambreFiltered;
     }
-    return chambreFiltered;
-}
-    
+
+    public int nombreChambreParCategorie(Categorie categorie) {
+
+        int nombreChambres = 0;
+
+        String query = "SELECT COUNT(*) AS count FROM chambre WHERE categorie_id = ?";
+
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(query)) {
+
+            ps.setInt(1, categorie.getId());
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    nombreChambres = rs.getInt("count");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erreur SQL lors de la récupération du nombre des chambres : " + e.getMessage());
+        }
+        return nombreChambres;
+    }
+
 }
