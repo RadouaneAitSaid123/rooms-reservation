@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
-import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import service.CategorieService;
 import service.ChambreService;
@@ -31,8 +30,10 @@ public class Reservations extends javax.swing.JFrame {
     private final CategorieService categorieService;
     private final ClientService clientService;
     private final ReservationService reservationService;
+    private final ModelUser user;
 
     public Reservations(ModelUser user) {
+        this.user = user;
         initComponents();
         DateChangeListener();
         chambreService = new ChambreService();
@@ -53,13 +54,14 @@ public class Reservations extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        logoutBtn = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        roomLink2 = new javax.swing.JLabel();
+        catLink2 = new javax.swing.JLabel();
+        logoutBtn3 = new javax.swing.JLabel();
+        reservationLink2 = new javax.swing.JLabel();
+        dashboardLink2 = new javax.swing.JLabel();
+        clientLink2 = new javax.swing.JLabel();
+        userLink3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         userName = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -97,74 +99,113 @@ public class Reservations extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
 
-        jPanel4.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel8.setBackground(new java.awt.Color(0, 102, 102));
 
-        jLabel7.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Chambres");
-
-        jLabel6.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Catégories");
-
-        logoutBtn.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        logoutBtn.setForeground(new java.awt.Color(255, 255, 255));
-        logoutBtn.setText("Logout");
-        logoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        roomLink2.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        roomLink2.setForeground(new java.awt.Color(255, 255, 255));
+        roomLink2.setText("Chambres");
+        roomLink2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutBtnMouseClicked(evt);
+                roomLink2MouseClicked(evt);
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Reservations");
+        catLink2.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        catLink2.setForeground(new java.awt.Color(255, 255, 255));
+        catLink2.setText("Catégories");
+        catLink2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                catLink2MouseClicked(evt);
+            }
+        });
 
-        jLabel10.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Dashboard");
+        logoutBtn3.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        logoutBtn3.setForeground(new java.awt.Color(255, 255, 255));
+        logoutBtn3.setText("Logout");
+        logoutBtn3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutBtn3MouseClicked(evt);
+            }
+        });
 
-        jLabel11.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Clients");
+        reservationLink2.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        reservationLink2.setForeground(new java.awt.Color(255, 255, 255));
+        reservationLink2.setText("Reservations");
+        reservationLink2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reservationLink2MouseClicked(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        dashboardLink2.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        dashboardLink2.setForeground(new java.awt.Color(255, 255, 255));
+        dashboardLink2.setText("Dashboard");
+        dashboardLink2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardLink2MouseClicked(evt);
+            }
+        });
+
+        clientLink2.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        clientLink2.setForeground(new java.awt.Color(255, 255, 255));
+        clientLink2.setText("Clients");
+        clientLink2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clientLink2MouseClicked(evt);
+            }
+        });
+
+        userLink3.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        userLink3.setForeground(new java.awt.Color(255, 255, 255));
+        userLink3.setText("Users");
+        userLink3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userLink3MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(logoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(logoutBtn3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(catLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(roomLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(reservationLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dashboardLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(8, 8, 8))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(clientLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addComponent(userLink3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(150, 150, 150)
-                .addComponent(jLabel10)
+                .addComponent(dashboardLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
+                .addComponent(roomLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
+                .addComponent(catLink2)
                 .addGap(17, 17, 17)
-                .addComponent(jLabel9)
+                .addComponent(reservationLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11)
+                .addComponent(clientLink2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(userLink3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logoutBtn)
+                .addComponent(logoutBtn3)
                 .addGap(18, 18, 18))
         );
 
@@ -174,13 +215,13 @@ public class Reservations extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -492,11 +533,6 @@ public class Reservations extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void logoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtnMouseClicked
-        new Login().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_logoutBtnMouseClicked
 
     private void ReservationIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservationIdActionPerformed
         // TODO add your handling code here:
@@ -891,6 +927,40 @@ public class Reservations extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_exportBtnActionPerformed
 
+    private void roomLink2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomLink2MouseClicked
+        new Rooms(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_roomLink2MouseClicked
+
+    private void catLink2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catLink2MouseClicked
+        new Categories(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_catLink2MouseClicked
+
+    private void logoutBtn3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBtn3MouseClicked
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutBtn3MouseClicked
+
+    private void reservationLink2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservationLink2MouseClicked
+       this.setVisible(true);
+    }//GEN-LAST:event_reservationLink2MouseClicked
+
+    private void dashboardLink2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardLink2MouseClicked
+         new Dashboard(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dashboardLink2MouseClicked
+
+    private void clientLink2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientLink2MouseClicked
+        new Clients(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_clientLink2MouseClicked
+
+    private void userLink3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userLink3MouseClicked
+        new Users(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_userLink3MouseClicked
+
     private void loadTable(List<Reservation> reservations) {
         DefaultTableModel model = (DefaultTableModel) ReservationsTable.getModel();
         model.setRowCount(0); // Effacer les lignes existantes
@@ -931,15 +1001,16 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> RoomCategorie;
     private javax.swing.JButton annulerBtn;
     private javax.swing.JButton annulerReservationBtn;
+    private javax.swing.JLabel catLink2;
     private javax.swing.JComboBox<String> clientComoBox;
+    private javax.swing.JLabel clientLink2;
+    private javax.swing.JLabel dashboardLink2;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton exportBtn;
     private javax.swing.JButton filterBtn;
     private com.toedter.calendar.JDateChooser filterDateDebut;
     private com.toedter.calendar.JDateChooser filterDateFin;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -948,19 +1019,19 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel logoutBtn;
+    private javax.swing.JLabel logoutBtn3;
+    private javax.swing.JLabel reservationLink2;
     private javax.swing.JButton reserver;
     private javax.swing.JComboBox<String> roomComboBox;
+    private javax.swing.JLabel roomLink2;
     private javax.swing.JButton updateBtn;
+    private javax.swing.JLabel userLink3;
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 

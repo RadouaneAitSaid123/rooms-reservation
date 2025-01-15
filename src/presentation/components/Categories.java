@@ -43,12 +43,13 @@ public class Categories extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        catBtn = new javax.swing.JLabel();
+        roomLink = new javax.swing.JLabel();
+        catLink = new javax.swing.JLabel();
         logoutBtn = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        reservationLink = new javax.swing.JLabel();
+        dashboardLink = new javax.swing.JLabel();
+        clientLink = new javax.swing.JLabel();
+        userLink = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         userName = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -75,16 +76,21 @@ public class Categories extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
 
-        jLabel7.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Chambres");
-
-        catBtn.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        catBtn.setForeground(new java.awt.Color(255, 255, 255));
-        catBtn.setText("Catégories");
-        catBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        roomLink.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        roomLink.setForeground(new java.awt.Color(255, 255, 255));
+        roomLink.setText("Chambres");
+        roomLink.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                catBtnMouseClicked(evt);
+                roomLinkMouseClicked(evt);
+            }
+        });
+
+        catLink.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        catLink.setForeground(new java.awt.Color(255, 255, 255));
+        catLink.setText("Catégories");
+        catLink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                catLinkMouseClicked(evt);
             }
         });
 
@@ -97,17 +103,41 @@ public class Categories extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Reservations");
+        reservationLink.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        reservationLink.setForeground(new java.awt.Color(255, 255, 255));
+        reservationLink.setText("Reservations");
+        reservationLink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reservationLinkMouseClicked(evt);
+            }
+        });
 
-        jLabel10.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Dashboard");
+        dashboardLink.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        dashboardLink.setForeground(new java.awt.Color(255, 255, 255));
+        dashboardLink.setText("Dashboard");
+        dashboardLink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardLinkMouseClicked(evt);
+            }
+        });
 
-        jLabel11.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Clients");
+        clientLink.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        clientLink.setForeground(new java.awt.Color(255, 255, 255));
+        clientLink.setText("Clients");
+        clientLink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clientLinkMouseClicked(evt);
+            }
+        });
+
+        userLink.setFont(new java.awt.Font("Yu Gothic Light", 3, 22)); // NOI18N
+        userLink.setForeground(new java.awt.Color(255, 255, 255));
+        userLink.setText("Users");
+        userLink.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                userLinkMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -121,30 +151,35 @@ public class Categories extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(logoutBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(catBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(catLink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(roomLink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(reservationLink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dashboardLink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(8, 8, 8))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(clientLink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(userLink, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(150, 150, 150)
-                .addComponent(jLabel10)
+                .addComponent(dashboardLink)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
+                .addComponent(roomLink)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(catBtn)
+                .addComponent(catLink)
                 .addGap(17, 17, 17)
-                .addComponent(jLabel9)
+                .addComponent(reservationLink)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                .addComponent(clientLink)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(userLink)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(logoutBtn)
                 .addGap(18, 18, 18))
         );
@@ -358,7 +393,7 @@ public class Categories extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(DeleteCategorieBtn)
                             .addComponent(annulerBtn))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 75, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -495,15 +530,40 @@ public class Categories extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CategoriesTableMouseClicked
 
-    private void catBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catBtnMouseClicked
+    private void catLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_catLinkMouseClicked
         //new Categories(user).setVisible(true);
         this.setVisible(true);
 
-    }//GEN-LAST:event_catBtnMouseClicked
+    }//GEN-LAST:event_catLinkMouseClicked
 
     private void annulerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerBtnActionPerformed
-       cleanForm();
+        cleanForm();
     }//GEN-LAST:event_annulerBtnActionPerformed
+
+    private void dashboardLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardLinkMouseClicked
+        new Dashboard(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dashboardLinkMouseClicked
+
+    private void roomLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roomLinkMouseClicked
+        new Rooms(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_roomLinkMouseClicked
+
+    private void reservationLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reservationLinkMouseClicked
+        new Reservations(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_reservationLinkMouseClicked
+
+    private void clientLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientLinkMouseClicked
+        new Clients(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_clientLinkMouseClicked
+
+    private void userLinkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userLinkMouseClicked
+        new Users(user).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_userLinkMouseClicked
 
     public static void main(ModelUser user) {
 
@@ -543,22 +603,23 @@ public class Categories extends javax.swing.JFrame {
     private javax.swing.JButton DeleteCategorieBtn;
     private javax.swing.JButton EditCategorieBtn;
     private javax.swing.JButton annulerBtn;
-    private javax.swing.JLabel catBtn;
+    private javax.swing.JLabel catLink;
+    private javax.swing.JLabel clientLink;
+    private javax.swing.JLabel dashboardLink;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel logoutBtn;
+    private javax.swing.JLabel reservationLink;
+    private javax.swing.JLabel roomLink;
+    private javax.swing.JLabel userLink;
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }
