@@ -15,6 +15,14 @@ import java.util.List;
 
 public class ReservationService implements IDAO<Reservation> {
 
+    private ClientService clientService;
+    private ChambreService chambreService;
+
+    public ReservationService() {
+        this.clientService = new ClientService();
+        this.chambreService = new ChambreService();
+    }
+
     @Override
     public boolean creat(Reservation o) {
 
@@ -171,6 +179,36 @@ public class ReservationService implements IDAO<Reservation> {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public List<Reservation> findByDateRange(Date startDate, Date endDate) {
+        String query = "SELECT * FROM reservation WHERE dateDebut >= ? AND dateFin <= ?";
+        List<Reservation> reservations = new ArrayList<>();
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(query)) {
+            ps.setDate(1, new java.sql.Date(startDate.getTime()));
+            ps.setDate(2, new java.sql.Date(endDate.getTime()));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    Date dateDebut = rs.getDate("dateDebut");
+                    Date dateFin = rs.getDate("dateFin");
+                    int clientId = rs.getInt("client_id");
+                    int chambreId = rs.getInt("chambre_id");
+                    String statusString = rs.getString("status");
+
+                    Client client = clientService.findById(clientId);
+                    Chambre chambre = chambreService.findById(chambreId);
+                    
+                    ReservationStatus status = ReservationStatus.fromValue(statusString);
+
+                    Reservation reservation = new Reservation(id, dateDebut, dateFin, client, chambre, status);
+                    reservations.add(reservation);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reservations;
     }
 
 }
