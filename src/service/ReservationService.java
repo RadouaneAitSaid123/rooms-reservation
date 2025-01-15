@@ -5,6 +5,7 @@ import dao.IDAO;
 import entities.Chambre;
 import entities.Client;
 import entities.Reservation;
+import entities.ReservationStatus;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class ReservationService implements IDAO<Reservation> {
             return false;
         }
 
-        String req = "INSERT INTO reservation (dateDebut, dateFin, client_id, chambre_id) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO reservation (dateDebut, dateFin, client_id, chambre_id, status) VALUES (?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = Connexion.getConnection().prepareStatement(req);
@@ -31,6 +32,7 @@ public class ReservationService implements IDAO<Reservation> {
             ps.setDate(2, new java.sql.Date(o.getDateFin().getTime()));
             ps.setInt(3, o.getClient().getId());
             ps.setInt(4, o.getChambre().getId());
+            ps.setString(5, o.getStatus().getValue());
 
             if (ps.executeUpdate() == 1) {
                 return true;
@@ -45,7 +47,7 @@ public class ReservationService implements IDAO<Reservation> {
 
     @Override
     public boolean update(Reservation o) {
-        String req = "UPDATE reservation SET dateDebut = ?, dateFin = ?, client_id = ?, chambre_id = ? WHERE id = ?";
+        String req = "UPDATE reservation SET dateDebut = ?, dateFin = ?, client_id = ?, chambre_id = ?, status = ? WHERE id = ?";
 
         try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
 
@@ -64,7 +66,8 @@ public class ReservationService implements IDAO<Reservation> {
                 ps.setNull(4, java.sql.Types.INTEGER);
             }
 
-            ps.setInt(5, o.getId());
+            ps.setString(5, o.getStatus().getValue());
+            ps.setInt(6, o.getId());
 
             int rowsAffected = ps.executeUpdate();
 
@@ -108,7 +111,10 @@ public class ReservationService implements IDAO<Reservation> {
                 Client client = new ClientService().findById(clientId);
                 Chambre chambre = new ChambreService().findById(chambreId);
 
-                return new Reservation(id, dateDebut, dateFin, client, chambre);
+                String statusString = rs.getString("status");
+                ReservationStatus status = ReservationStatus.fromValue(statusString);
+
+                return new Reservation(id, dateDebut, dateFin, client, chambre, status);
             }
         } catch (SQLException e) {
             System.out.println("Erreur SQL : " + e.getMessage());
@@ -118,7 +124,7 @@ public class ReservationService implements IDAO<Reservation> {
 
     @Override
     public List<Reservation> findAll() {
-        String req = "SELECT id, dateDebut, dateFin, client_id, chambre_id FROM reservation";
+        String req = "SELECT * FROM reservation";
         List<Reservation> reservations = new ArrayList<>();
         try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req); ResultSet rs = ps.executeQuery()) {
 
@@ -141,7 +147,10 @@ public class ReservationService implements IDAO<Reservation> {
                     chambre = chambreService.findById(rs.getInt("chambre_id"));
                 }
 
-                Reservation reservation = new Reservation(id, dateDebut, dateFin, client, chambre);
+                String statusString = rs.getString("status");
+                ReservationStatus status = ReservationStatus.fromValue(statusString);
+
+                Reservation reservation = new Reservation(id, dateDebut, dateFin, client, chambre, status);
 
                 reservations.add(reservation);
             }
@@ -150,6 +159,18 @@ public class ReservationService implements IDAO<Reservation> {
             System.out.println("Erreur SQL : " + e.getMessage());
         }
         return reservations;
+    }
+
+    public boolean updateStatus(int reservationId, ReservationStatus status) {
+        String query = "UPDATE reservation SET status = ? WHERE id = ?";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(query)) {
+            ps.setString(1, status.getValue());
+            ps.setInt(2, reservationId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

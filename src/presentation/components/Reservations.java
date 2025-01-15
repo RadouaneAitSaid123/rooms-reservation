@@ -5,11 +5,13 @@ import entities.Chambre;
 import entities.Client;
 import entities.ModelUser;
 import entities.Reservation;
+import entities.ReservationStatus;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -77,6 +79,7 @@ public class Reservations extends javax.swing.JFrame {
         annulerBtn = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         roomComboBox = new javax.swing.JComboBox<>();
+        annulerReservationBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -214,13 +217,13 @@ public class Reservations extends javax.swing.JFrame {
         ReservationsTable.setFont(new java.awt.Font("Yu Gothic Light", 0, 14)); // NOI18N
         ReservationsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Date Début", "Date Fin", "Client", "Chambre"
+                "ID", "Date Début", "Date Fin", "Client", "Chambre", "Status"
             }
         ));
         ReservationsTable.setGridColor(new java.awt.Color(0, 0, 0));
@@ -304,6 +307,15 @@ public class Reservations extends javax.swing.JFrame {
         jLabel13.setText("Date Fin");
         jLabel13.setPreferredSize(new java.awt.Dimension(37, 22));
 
+        annulerReservationBtn.setBackground(new java.awt.Color(255, 204, 102));
+        annulerReservationBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        annulerReservationBtn.setText("Annuler réservation");
+        annulerReservationBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                annulerReservationBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -316,38 +328,43 @@ public class Reservations extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(deleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(reserver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(annulerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)))
-                                .addComponent(DateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(DateDebut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ReservationId, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(clientComoBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(RoomCategorie, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(roomComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(350, 350, 350)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(annulerReservationBtn))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(deleteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(reserver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addGap(18, 18, 18)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(annulerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)))
+                                        .addComponent(DateFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(DateDebut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ReservationId, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(clientComoBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(RoomCategorie, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(roomComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(14, 14, 14))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,7 +375,9 @@ public class Reservations extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addGap(83, 83, 83)
+                .addGap(42, 42, 42)
+                .addComponent(annulerReservationBtn)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -472,8 +491,10 @@ public class Reservations extends javax.swing.JFrame {
             showMessageDialog(this, "Chambre non trouvée !");
             return;
         }
+        
+        ReservationStatus status = ReservationStatus.ACTIVE; 
 
-        Reservation reservation = new Reservation(dateDebut, dateFin, client, chambre);
+        Reservation reservation = new Reservation(dateDebut, dateFin, client, chambre, status);
 
         int rep = showConfirmDialog(this, "Voulez vous vraiment ajouter cette réservation ?");
         if (rep == 0) {
@@ -677,6 +698,8 @@ public class Reservations extends javax.swing.JFrame {
         }*/
         int selectedRow = ReservationsTable.getSelectedRow();
         if (selectedRow != -1) {
+
+            // Récuperer l'ID
             int id = (int) ReservationsTable.getValueAt(selectedRow, 0);
 
             // Récupérer la date de début et la date de fin sous forme de String
@@ -698,7 +721,7 @@ public class Reservations extends javax.swing.JFrame {
             // Récupérer les autres valeurs
             String client = ReservationsTable.getValueAt(selectedRow, 3).toString();
             String room = ReservationsTable.getValueAt(selectedRow, 4).toString();
-            
+
             if (room == null || room.isEmpty()) {
                 System.out.println("Erreur : aucune chambre n'est assignée pour cette réservation.");
                 return;
@@ -719,11 +742,10 @@ public class Reservations extends javax.swing.JFrame {
             }
 
             // Mettre à jour le combobox avec les chambres disponibles
-            roomComboBox.removeAllItems();
+            /*roomComboBox.removeAllItems();
             for (Chambre availableRoom : availableRooms) {
                 roomComboBox.addItem(availableRoom.getNumero());
-            }
-
+            }*/
             // Remplir les champs avec les données de la réservation sélectionnée
             ReservationId.setText(String.valueOf(id));
             if (dateDebut != null) {
@@ -740,6 +762,25 @@ public class Reservations extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_ReservationsTableMouseClicked
+
+    private void annulerReservationBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerReservationBtnActionPerformed
+        int selectedRow = ReservationsTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Veuillez sélectionner une réservation à annuler !");
+            return;
+        }
+
+        int reservationId = (int) ReservationsTable.getValueAt(selectedRow, 0);
+        int confirmation = JOptionPane.showConfirmDialog(this, "Voulez-vous vraiment annuler cette réservation ?", "Confirmation", JOptionPane.YES_NO_OPTION);
+        if (confirmation == JOptionPane.YES_OPTION) {
+            if (reservationService.updateStatus(reservationId, ReservationStatus.ANNULEE)) {
+                JOptionPane.showMessageDialog(this, "Réservation annulée avec succès !");
+                loadTable(); // Recharger la table avec les réservations actives
+            } else {
+                JOptionPane.showMessageDialog(this, "Erreur lors de l'annulation de la réservation !");
+            }
+        }
+    }//GEN-LAST:event_annulerReservationBtnActionPerformed
 
     private void DateChangeListener() {
         DateDebut.addPropertyChangeListener("date", evt -> updateRoomsByDateAndCategory());
@@ -759,6 +800,7 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JTable ReservationsTable;
     private javax.swing.JComboBox<String> RoomCategorie;
     private javax.swing.JButton annulerBtn;
+    private javax.swing.JButton annulerReservationBtn;
     private javax.swing.JComboBox<String> clientComoBox;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel jLabel1;
@@ -830,7 +872,8 @@ public class Reservations extends javax.swing.JFrame {
                 dateDebut,
                 dateFin,
                 clientName,
-                chambreNumero
+                chambreNumero,
+                reservation.getStatus()
             });
         }
     }

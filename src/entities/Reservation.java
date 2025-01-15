@@ -9,22 +9,25 @@ public class Reservation {
     private Date dateFin;
     private Client client;
     private Chambre chambre;
+    private ReservationStatus status;
     private static int count = 0;
 
-    public Reservation(Date dateDebut, Date dateFin, Client client, Chambre chambre) {
+    public Reservation(Date dateDebut, Date dateFin, Client client, Chambre chambre, ReservationStatus status) {
         this.id = ++count;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
         this.chambre = chambre;
+        this.status = status;
     }
-    
-     public Reservation(int id, Date dateDebut, Date dateFin, Client client, Chambre chambre) {
+
+    public Reservation(int id, Date dateDebut, Date dateFin, Client client, Chambre chambre, ReservationStatus status) {
         this.id = id;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.client = client;
         this.chambre = chambre;
+        this.status = status;
     }
 
     public int getId() {
@@ -65,6 +68,14 @@ public class Reservation {
 
     public void setChambre(Chambre chambre) {
         this.chambre = chambre;
+    }
+
+    public ReservationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReservationStatus status) {
+        this.status = status;
     }
 
     @Override
