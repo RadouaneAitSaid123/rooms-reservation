@@ -6,12 +6,15 @@ package service;
 
 import java.sql.Connection;
 import connexion.Connexion;
+import entities.Client;
 import entities.ModelLogin;
 import entities.ModelUser;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +39,7 @@ public class UserService {
             p.setString(2, login.getPassword());
             ResultSet r = p.executeQuery();
 
-            if (r.first()) {  
+            if (r.first()) {
                 int userID = r.getInt(1);
                 String userName = r.getString(2);
                 String email = r.getString(3);
@@ -48,9 +51,10 @@ public class UserService {
         } catch (SQLException ex) {
             Logger.getLogger(UserService.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return  null;
+        return null;
     }
 // Ajouter un utilisateur dans la base de données
+
     public void insertUser(ModelUser user) {
         String req = "INSERT INTO `user` (UserName, Email, `Password`, VerifyCode) VALUES (?, ?, ?, ?)";
         try (PreparedStatement p = Connexion.getConnection().prepareStatement(req, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -136,6 +140,27 @@ public class UserService {
                 return r.next();
             }
         }
+    }
+
+    public Iterable<ModelUser> findAll() {
+        List<ModelUser> users = new ArrayList<>();
+        String req = "SELECT * FROM user";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                ModelUser user = new ModelUser(
+                        rs.getInt("UserId"),
+                        rs.getString("UserName"),
+                        rs.getString("Email"),
+                        rs.getString("Password"),
+                        rs.getString("VerifyCode"),
+                        rs.getString("Status")
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération de tous les clients : " + e.getMessage());
+        }
+        return users;
     }
 
 }

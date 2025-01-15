@@ -50,6 +50,15 @@ public class ModelUser {
         this.verifyCode = verifyCode;
     }
 
+    public ModelUser(int userID, String userName, String email, String password, String verifyCode, String status) {
+        this.userID = userID;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.verifyCode = verifyCode;
+        this.status = status;
+    }
+
     public ModelUser(int userID, String userName, String email, String password) {
         this.userID = userID;
         this.userName = userName;
@@ -65,4 +74,13 @@ public class ModelUser {
     private String email;
     private String password;
     private String verifyCode;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
