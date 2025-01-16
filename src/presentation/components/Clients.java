@@ -261,6 +261,7 @@ public class Clients extends javax.swing.JFrame {
             }
         });
 
+        ClientsTable.setBackground(new java.awt.Color(0, 204, 153));
         ClientsTable.setFont(new java.awt.Font("Yu Gothic Light", 0, 14)); // NOI18N
         ClientsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -272,10 +273,19 @@ public class Clients extends javax.swing.JFrame {
             new String [] {
                 "ID", "Nom", "Prénom", "Télephone", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, true, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         ClientsTable.setGridColor(new java.awt.Color(0, 0, 0));
         ClientsTable.setRowHeight(25);
         ClientsTable.setRowMargin(1);
+        ClientsTable.setShowGrid(true);
         ClientsTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ClientsTableMouseClicked(evt);
@@ -288,7 +298,7 @@ public class Clients extends javax.swing.JFrame {
             ClientsTable.getColumnModel().getColumn(1).setPreferredWidth(40);
             ClientsTable.getColumnModel().getColumn(2).setPreferredWidth(40);
             ClientsTable.getColumnModel().getColumn(3).setPreferredWidth(30);
-            ClientsTable.getColumnModel().getColumn(4).setPreferredWidth(130);
+            ClientsTable.getColumnModel().getColumn(4).setPreferredWidth(120);
         }
 
         jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N

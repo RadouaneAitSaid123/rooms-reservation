@@ -1,27 +1,17 @@
 package service;
 
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import connexion.Connexion;
 import dao.IDAO;
 import entities.Chambre;
 import entities.Client;
 import entities.Reservation;
 import entities.ReservationStatus;
-import java.io.FileNotFoundException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.io.FileOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ReservationService implements IDAO<Reservation> {
 
@@ -208,7 +198,7 @@ public class ReservationService implements IDAO<Reservation> {
 
                     Client client = clientService.findById(clientId);
                     Chambre chambre = chambreService.findById(chambreId);
-                    
+
                     ReservationStatus status = ReservationStatus.fromValue(statusString);
 
                     Reservation reservation = new Reservation(id, dateDebut, dateFin, client, chambre, status);
@@ -220,7 +210,29 @@ public class ReservationService implements IDAO<Reservation> {
         }
         return reservations;
     }
-    
-     
+
+    public int getReservationCountByClientAndYear(Client client, int year) {
+        int count = 0;
+        String query = "SELECT COUNT(*) AS total "
+                + "FROM reservation "
+                + "WHERE client_id = ? AND "
+                + "      (YEAR(dateDebut) = ? OR YEAR(dateFin) = ? "
+                + "       OR (YEAR(dateDebut) <= ? AND YEAR(dateFin) >= ?))";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(query)) {
+            ps.setInt(1, client.getId());
+            ps.setInt(2, year);
+            ps.setInt(3, year);
+            ps.setInt(4, year);
+            ps.setInt(5, year);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 
 }

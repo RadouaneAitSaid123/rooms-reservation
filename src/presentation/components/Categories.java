@@ -203,7 +203,6 @@ public class Categories extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(0, 153, 153));
 
         userName.setFont(new java.awt.Font("Yu Gothic Light", 3, 14)); // NOI18N
-        userName.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -248,6 +247,7 @@ public class Categories extends javax.swing.JFrame {
             }
         });
 
+        CategoriesTable.setBackground(new java.awt.Color(0, 204, 153));
         CategoriesTable.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         CategoriesTable.setFont(new java.awt.Font("Yu Gothic Light", 0, 14)); // NOI18N
         CategoriesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -260,10 +260,19 @@ public class Categories extends javax.swing.JFrame {
             new String [] {
                 "ID", "Code", "Libelle"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         CategoriesTable.setGridColor(new java.awt.Color(0, 0, 0));
         CategoriesTable.setRowHeight(25);
         CategoriesTable.setRowMargin(1);
+        CategoriesTable.setShowGrid(true);
         CategoriesTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CategoriesTableMouseClicked(evt);

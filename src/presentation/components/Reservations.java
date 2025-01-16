@@ -91,6 +91,7 @@ public class Reservations extends javax.swing.JFrame {
         filterDateFin = new com.toedter.calendar.JDateChooser();
         filterBtn = new javax.swing.JButton();
         exportBtn = new javax.swing.JButton();
+        loadData = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -264,6 +265,7 @@ public class Reservations extends javax.swing.JFrame {
         jLabel5.setText("Catégorie");
         jLabel5.setPreferredSize(new java.awt.Dimension(37, 22));
 
+        ReservationsTable.setBackground(new java.awt.Color(0, 204, 153));
         ReservationsTable.setFont(new java.awt.Font("Yu Gothic Light", 0, 14)); // NOI18N
         ReservationsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -275,10 +277,19 @@ public class Reservations extends javax.swing.JFrame {
             new String [] {
                 "ID", "Date Début", "Date Fin", "Client", "Chambre", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         ReservationsTable.setGridColor(new java.awt.Color(0, 0, 0));
         ReservationsTable.setRowHeight(25);
         ReservationsTable.setRowMargin(1);
+        ReservationsTable.setShowGrid(true);
         ReservationsTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ReservationsTableMouseClicked(evt);
@@ -337,6 +348,12 @@ public class Reservations extends javax.swing.JFrame {
         jLabel12.setText("Date Début");
         jLabel12.setPreferredSize(new java.awt.Dimension(37, 22));
 
+        clientComoBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientComoBoxActionPerformed(evt);
+            }
+        });
+
         RoomCategorie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 RoomCategorieActionPerformed(evt);
@@ -394,6 +411,15 @@ public class Reservations extends javax.swing.JFrame {
             }
         });
 
+        loadData.setBackground(new java.awt.Color(102, 255, 51));
+        loadData.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        loadData.setText("Load");
+        loadData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadDataActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -412,7 +438,7 @@ public class Reservations extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(298, 298, 298))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -436,14 +462,17 @@ public class Reservations extends javax.swing.JFrame {
                                 .addComponent(roomComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(exportBtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(filterDateDebut, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(28, 28, 28)
-                                .addComponent(filterBtn)
+                                .addGap(25, 25, 25)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(filterBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(loadData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -451,10 +480,7 @@ public class Reservations extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(annulerReservationBtn))
                                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1))
                         .addGap(14, 14, 14))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -466,12 +492,17 @@ public class Reservations extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(exportBtn))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(exportBtn)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(loadData)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(annulerReservationBtn)
@@ -961,6 +992,14 @@ public class Reservations extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_userLink3MouseClicked
 
+    private void loadDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadDataActionPerformed
+        loadTable();
+    }//GEN-LAST:event_loadDataActionPerformed
+
+    private void clientComoBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientComoBoxActionPerformed
+
+    }//GEN-LAST:event_clientComoBoxActionPerformed
+
     private void loadTable(List<Reservation> reservations) {
         DefaultTableModel model = (DefaultTableModel) ReservationsTable.getModel();
         model.setRowCount(0); // Effacer les lignes existantes
@@ -1025,6 +1064,7 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton loadData;
     private javax.swing.JLabel logoutBtn3;
     private javax.swing.JLabel reservationLink2;
     private javax.swing.JButton reserver;
@@ -1055,15 +1095,6 @@ public class Reservations extends javax.swing.JFrame {
         }
     }
 
-    /*private void remplirComboBoxCategorie() {
-        List<Categorie> categories = categorieService.findAll();
-
-        RoomCategorie.removeAllItems();
-
-        for (Categorie categorie : categories) {
-            RoomCategorie.addItem(categorie.getLibelle());
-        }
-    }*/
     private void loadTable() {
         model.setRowCount(0);
 

@@ -253,6 +253,7 @@ public class Users extends javax.swing.JFrame {
             }
         });
 
+        UsersTable.setBackground(new java.awt.Color(0, 204, 153));
         UsersTable.setFont(new java.awt.Font("Yu Gothic Light", 0, 14)); // NOI18N
         UsersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -264,16 +265,33 @@ public class Users extends javax.swing.JFrame {
             new String [] {
                 "ID", "UserName", "Email", "Password", "VerifyCode", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         UsersTable.setGridColor(new java.awt.Color(0, 0, 0));
         UsersTable.setRowHeight(25);
         UsersTable.setRowMargin(1);
+        UsersTable.setShowGrid(true);
         UsersTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 UsersTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(UsersTable);
+        if (UsersTable.getColumnModel().getColumnCount() > 0) {
+            UsersTable.getColumnModel().getColumn(0).setPreferredWidth(10);
+            UsersTable.getColumnModel().getColumn(1).setPreferredWidth(30);
+            UsersTable.getColumnModel().getColumn(2).setPreferredWidth(110);
+            UsersTable.getColumnModel().getColumn(3).setPreferredWidth(30);
+            UsersTable.getColumnModel().getColumn(4).setPreferredWidth(30);
+            UsersTable.getColumnModel().getColumn(5).setPreferredWidth(30);
+        }
 
         jLabel3.setFont(new java.awt.Font("Bookman Old Style", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 204, 204));
@@ -360,9 +378,9 @@ public class Users extends javax.swing.JFrame {
                                         .addComponent(deleteUserBtn)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(annulerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(33, 33, 33)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane1)
-                                .addGap(27, 27, 27))
+                                .addContainerGap())
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -153,7 +153,7 @@ public class ClientService implements IDAO<Client> {
     }
 
     public Client findByPrenom(String clientPrenom) {
-         String req = "SELECT * FROM client WHERE prenom = ?";
+        String req = "SELECT * FROM client WHERE prenom = ?";
         try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
             ps.setString(1, clientPrenom);
             ResultSet rs = ps.executeQuery();
@@ -170,6 +170,23 @@ public class ClientService implements IDAO<Client> {
             System.out.println("Erreur SQL : " + e.getMessage());
         }
         return null;
+    }
+
+    public int nbrClients() {
+
+        int count = 0;
+
+        String req = "SELECT COUNT(*) AS total FROM client";
+        try (PreparedStatement ps = Connexion.getConnection().prepareStatement(req)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
 }

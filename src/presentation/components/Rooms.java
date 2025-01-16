@@ -308,6 +308,7 @@ public class Rooms extends javax.swing.JFrame {
             }
         });
 
+        RoomsTable.setBackground(new java.awt.Color(0, 204, 153));
         RoomsTable.setFont(new java.awt.Font("Yu Gothic Light", 0, 14)); // NOI18N
         RoomsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -319,10 +320,19 @@ public class Rooms extends javax.swing.JFrame {
             new String [] {
                 "ID", "Numéro", "Télephone", "Catégorie"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         RoomsTable.setGridColor(new java.awt.Color(0, 0, 0));
         RoomsTable.setRowHeight(25);
         RoomsTable.setRowMargin(1);
+        RoomsTable.setShowGrid(true);
         RoomsTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RoomsTableMouseClicked(evt);
