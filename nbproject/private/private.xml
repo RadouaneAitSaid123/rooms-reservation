@@ -3,22 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/ModelUser.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/connexion/Connexion.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/Reservation.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Login.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/ClientFrame.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelVerifyCode.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelLoading.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/MailService.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelCover.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/PanelLoginAndRegister.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Message.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/ModelLogin.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Main.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/ModelMessage.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Users.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/entities/Chambre.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Categories.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/ChambreService.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/ReservationService.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Rooms.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Clients.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/PDFGenerator.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Reservations.java</file>
+            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/components/Dashboard.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/ClientService.java</file>
             <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/service/UserService.java</file>
-            <file>file:/C:/Emsi/S1/Java/gestion-reservation/src/presentation/swing/PanelRound.java</file>
         </group>
     </open-files>
 </project-private>

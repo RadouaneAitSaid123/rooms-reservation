@@ -29,7 +29,8 @@ public class Dashboard extends javax.swing.JFrame {
         reservationService = new ReservationService();
         remplirComboBoxCategorie();
         remplirComboBoxClients();
-        iconRoom.setIcon(new ImageIcon(getClass().getResource("/presentation/icon/bed.png")));
+        iconRoom.setIcon(new ImageIcon(getClass().getResource("/presentation/icon/bedroom.png")));
+        hotelIcon.setIcon(new ImageIcon(getClass().getResource("/presentation/icon/hotel.png")));
         iconReservation.setIcon(new ImageIcon(getClass().getResource("/presentation/icon/reserve.png")));
         iconClient.setIcon(new ImageIcon(getClass().getResource("/presentation/icon/client.png")));
         nbrClients.setText(clientService.nbrClients() + " Clients");
@@ -72,6 +73,7 @@ public class Dashboard extends javax.swing.JFrame {
         dashboardLink2 = new javax.swing.JLabel();
         clientLink2 = new javax.swing.JLabel();
         userLink3 = new javax.swing.JLabel();
+        hotelIcon = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         userName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -175,6 +177,8 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        hotelIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -199,11 +203,17 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addComponent(userLink3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(hotelIcon)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(36, 36, 36)
+                .addComponent(hotelIcon)
+                .addGap(98, 98, 98)
                 .addComponent(dashboardLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roomLink2)
@@ -215,7 +225,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(clientLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(userLink3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
                 .addComponent(logoutBtn3)
                 .addGap(18, 18, 18))
         );
@@ -407,7 +417,7 @@ public class Dashboard extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1100, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1235, Short.MAX_VALUE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -536,6 +546,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> clientComboBox;
     private javax.swing.JLabel clientLink2;
     private javax.swing.JLabel dashboardLink2;
+    private javax.swing.JLabel hotelIcon;
     private javax.swing.JLabel iconClient;
     private javax.swing.JLabel iconReservation;
     private javax.swing.JLabel iconRoom;

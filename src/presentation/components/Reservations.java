@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showConfirmDialog;
@@ -46,6 +47,7 @@ public class Reservations extends javax.swing.JFrame {
         remplirComboBoxCategorie();
         userName.setText(user.getUserName());
         loadTable();
+        hotelIcon.setIcon(new ImageIcon(getClass().getResource("/presentation/icon/hotel.png")));
     }
 
     @SuppressWarnings("unchecked")
@@ -62,6 +64,7 @@ public class Reservations extends javax.swing.JFrame {
         dashboardLink2 = new javax.swing.JLabel();
         clientLink2 = new javax.swing.JLabel();
         userLink3 = new javax.swing.JLabel();
+        hotelIcon = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         userName = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -165,6 +168,8 @@ public class Reservations extends javax.swing.JFrame {
             }
         });
 
+        hotelIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -180,28 +185,36 @@ public class Reservations extends javax.swing.JFrame {
                                     .addComponent(catLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(roomLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(reservationLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dashboardLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(dashboardLink2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                         .addGap(8, 8, 8))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(clientLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addComponent(userLink3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addComponent(reservationLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(hotelIcon)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(48, 48, 48)
+                .addComponent(hotelIcon)
+                .addGap(102, 102, 102)
                 .addComponent(dashboardLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roomLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(catLink2)
-                .addGap(17, 17, 17)
-                .addComponent(reservationLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(reservationLink2)
+                .addGap(17, 17, 17)
                 .addComponent(clientLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(userLink3)
@@ -1049,6 +1062,7 @@ public class Reservations extends javax.swing.JFrame {
     private javax.swing.JButton filterBtn;
     private com.toedter.calendar.JDateChooser filterDateDebut;
     private com.toedter.calendar.JDateChooser filterDateFin;
+    private javax.swing.JLabel hotelIcon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;

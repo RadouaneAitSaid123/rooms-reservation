@@ -2,6 +2,7 @@ package presentation.components;
 
 import entities.Client;
 import entities.ModelUser;
+import javax.swing.ImageIcon;
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import static javax.swing.JOptionPane.showConfirmDialog;
@@ -22,6 +23,7 @@ public class Clients extends javax.swing.JFrame {
         model = (DefaultTableModel) ClientsTable.getModel();
         userName.setText(user.getUserName());
         loadTable();
+        hotelIcon.setIcon(new ImageIcon(getClass().getResource("/presentation/icon/hotel.png")));
     }
 
     private void loadTable() {
@@ -60,6 +62,7 @@ public class Clients extends javax.swing.JFrame {
         dashboardLink2 = new javax.swing.JLabel();
         clientLink2 = new javax.swing.JLabel();
         userLink3 = new javax.swing.JLabel();
+        hotelIcon = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         userName = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -153,6 +156,8 @@ public class Clients extends javax.swing.JFrame {
             }
         });
 
+        hotelIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -165,7 +170,6 @@ public class Clients extends javax.swing.JFrame {
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(logoutBtn3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(catLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(roomLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(reservationLink2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -177,11 +181,22 @@ public class Clients extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(userLink3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(catLink2))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(hotelIcon)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(55, 55, 55)
+                .addComponent(hotelIcon)
+                .addGap(95, 95, 95)
                 .addComponent(dashboardLink2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(roomLink2)
@@ -644,16 +659,11 @@ public class Clients extends javax.swing.JFrame {
     private javax.swing.JTable ClientsTable;
     private javax.swing.JButton ajouterBtn;
     private javax.swing.JButton annulerBtn;
-    private javax.swing.JLabel catLink;
-    private javax.swing.JLabel catLink1;
     private javax.swing.JLabel catLink2;
-    private javax.swing.JLabel clientLink;
-    private javax.swing.JLabel clientLink1;
     private javax.swing.JLabel clientLink2;
-    private javax.swing.JLabel dashboardLink;
-    private javax.swing.JLabel dashboardLink1;
     private javax.swing.JLabel dashboardLink2;
     private javax.swing.JButton editeBtn;
+    private javax.swing.JLabel hotelIcon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
@@ -664,22 +674,12 @@ public class Clients extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel logoutBtn;
-    private javax.swing.JLabel logoutBtn1;
     private javax.swing.JLabel logoutBtn3;
-    private javax.swing.JLabel reservationLink;
-    private javax.swing.JLabel reservationLink1;
     private javax.swing.JLabel reservationLink2;
-    private javax.swing.JLabel roomLink;
-    private javax.swing.JLabel roomLink1;
     private javax.swing.JLabel roomLink2;
     private javax.swing.JButton supprimerBtn;
-    private javax.swing.JLabel userLink;
-    private javax.swing.JLabel userLink1;
     private javax.swing.JLabel userLink3;
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
